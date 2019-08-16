@@ -1,0 +1,5 @@
+// b = A
+// dpad = dpad
+// start = START
+// y = B
+// back = SELECT
