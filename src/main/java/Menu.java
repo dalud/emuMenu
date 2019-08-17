@@ -30,7 +30,7 @@ class Menu extends JFrame {
         //spawn buttons with rom names
         for(int i=0; i<names.size(); i++){
             JButton b = new JButton((String) names.get(i));
-            Panel bPanel = new Panel();
+            JPanel bPanel = new JPanel();
             int i_ = i;
             b.addActionListener(e -> {
                 try {
@@ -58,11 +58,14 @@ class Menu extends JFrame {
                 }
             });
 
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
             bPanel.add(b);
+            bPanel.setOpaque(false);
             GridBagConstraints cons = new GridBagConstraints();
             cons.gridy = i+1;
             innerFrame.add(bPanel, cons);
-            this.getRootPane().setDefaultButton(b);
+            getRootPane().setDefaultButton(b);
 
         }
         add(window);
