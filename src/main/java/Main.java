@@ -45,7 +45,7 @@ public class Main {
     }
 
     public static void startRom(int i) throws IOException {
-
+        System.out.println(games[i]);
         // Process p = new ProcessBuilder(emu, path +"\\" +games[i] +"/fullscreen").start();
         ProcessBuilder builder = new ProcessBuilder(emu, path+"\\"+games[i]);
         Process p = builder.start();

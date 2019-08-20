@@ -34,8 +34,10 @@ class Menu extends JFrame {
             int i_ = i;
             b.addActionListener(e -> {
                 try {
-                    this.window.add(new JLabel(new ImageIcon("loading.png")));
+                    // this.window.add(new JLabel(new ImageIcon("loading.png")));
+
                     Main.startRom(i_);
+                    // System.out.println("Start game: " +names.get(i_));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -44,15 +46,13 @@ class Menu extends JFrame {
             b.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    //System.out.println(e.getKeyCode());
+                    System.out.println(e.getKeyCode());
                     switch (e.getKeyCode()){
                         case 40:
-                            b.transferFocus();
-                            window.setScrollPosition(bPanel.getX(), bPanel.getY());
+                            scrollDown(b, bPanel);
                             break;
                         case 38:
-                            b.transferFocusBackward();
-                            window.setScrollPosition(bPanel.getX(), bPanel.getY()-bPanel.getHeight());
+                            scrollUp(b, bPanel);
                             break;
                     }
                 }
@@ -65,7 +65,7 @@ class Menu extends JFrame {
             GridBagConstraints cons = new GridBagConstraints();
             cons.gridy = i+1;
             innerFrame.add(bPanel, cons);
-            getRootPane().setDefaultButton(b);
+            // getRootPane().setDefaultButton(b);
 
         }
         add(window);
@@ -79,6 +79,16 @@ class Menu extends JFrame {
                 System.exit(0);
             }
         });
+    }
+
+    public void scrollUp(JButton b, JPanel bPanel) {
+        b.transferFocusBackward();
+        window.setScrollPosition(bPanel.getX(), bPanel.getY()-bPanel.getHeight());
+    }
+
+    public void scrollDown(JButton b, JPanel bPanel) {
+        b.transferFocus();
+        window.setScrollPosition(bPanel.getX(), bPanel.getY());
     }
 
     public void setColor(Menu menu) {
