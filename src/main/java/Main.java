@@ -12,6 +12,7 @@ public class Main {
     static File path = new File("C:\\Nes\\Roms");   //path to Rom folder
     static String[] games = path.list();    //raw File names
     static GraphicsDevice vc;   //default video controller
+    private static Controllers gamepads;
 
     public static void main(String[] args){
         List<Object> names = beautify(Arrays.stream(games));
@@ -21,14 +22,25 @@ public class Main {
         vc.setFullScreenWindow(menu);
         Menu.window.setSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width, GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getFullScreenWindow().getHeight());
 
+        gamepads = new Controllers();
+        gamepads.init();
+
         //render loop
         int counter = 0;
         while (true){
-            if(counter == 100000000){
+            // Set color
+            System.out.println(counter);
+            if(counter > 10000){
                 menu.setColor(menu);
                 counter = 0;
             }
             counter++;
+
+            // Poll controllers
+            if(gamepads.getState(0).dpadDownJustPressed) {
+                // menu.scrollDown((JButton)menu.getFocusOwner(), (JPanel)menu.getFocusOwner().getParent());
+                // System.out.println(menu.getFocusOwner().getAccessibleContext());
+            }
         }
     }
 

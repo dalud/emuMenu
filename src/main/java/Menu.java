@@ -11,7 +11,6 @@ class Menu extends JFrame {
     static int rDir, gDir, bDir;    //directions to slide Colors (R,G,B)
     private Panel innerFrame;
     private Panel pad;
-    private Controllers gamepads;
 
     Menu(List names){
         window = new ScrollPane(ScrollPane.SCROLLBARS_NEVER);
@@ -24,8 +23,6 @@ class Menu extends JFrame {
         padCons.insets = new Insets(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height/2-30, 0, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height/2-30, 0);
         pad.add(innerFrame, padCons);
         window.add(pad);
-        gamepads = new Controllers();
-        gamepads.init();
 
         //spawn buttons with rom names
         for(int i=0; i<names.size(); i++){
@@ -35,7 +32,6 @@ class Menu extends JFrame {
             b.addActionListener(e -> {
                 try {
                     // this.window.add(new JLabel(new ImageIcon("loading.png")));
-
                     Main.startRom(i_);
                     // System.out.println("Start game: " +names.get(i_));
                 } catch (IOException e1) {
@@ -46,18 +42,26 @@ class Menu extends JFrame {
             b.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                    System.out.println(e.getKeyCode());
+                    // System.out.println(e.getKeyCode());
                     switch (e.getKeyCode()){
                         case 40:
-                            scrollDown(b, bPanel);
+                            b.transferFocus();
                             break;
                         case 38:
-                            scrollUp(b, bPanel);
+                            b.transferFocusBackward();
                             break;
                     }
                 }
             });
 
+            b.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    scroll();
+                }
+                @Override
+                public void focusLost(FocusEvent e) {}
+            });
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             bPanel.add(b);
@@ -69,7 +73,6 @@ class Menu extends JFrame {
 
         }
         add(window);
-        //setSize(640, 360);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
@@ -79,16 +82,6 @@ class Menu extends JFrame {
                 System.exit(0);
             }
         });
-    }
-
-    public void scrollUp(JButton b, JPanel bPanel) {
-        b.transferFocusBackward();
-        window.setScrollPosition(bPanel.getX(), bPanel.getY()-bPanel.getHeight());
-    }
-
-    public void scrollDown(JButton b, JPanel bPanel) {
-        b.transferFocus();
-        window.setScrollPosition(bPanel.getX(), bPanel.getY());
     }
 
     public void setColor(Menu menu) {
@@ -139,5 +132,9 @@ class Menu extends JFrame {
                 break;
         }
         return color;
+    }
+
+    public void scroll() {
+        window.setScrollPosition(this.getFocusOwner().getParent().getX(), this.getFocusOwner().getParent().getY());
     }
 }
