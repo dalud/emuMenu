@@ -52,6 +52,7 @@ public class Main {
                 .map(n -> n.replaceAll(", The", ""))
                 .map(n -> n.replaceAll("\\(PRG 0\\)", ""))
                 .map(n -> n.replaceAll("\\(Unl\\)", ""))
+                .map(n -> n.replaceAll("\\(J\\)", ""))
                 .collect(Collectors.toList());
     }
 

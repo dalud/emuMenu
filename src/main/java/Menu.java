@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,8 +12,21 @@ class Menu extends JFrame {
     static int rDir, gDir, bDir;    //directions to slide Colors (R,G,B)
     private JPanel innerFrame;
     private JPanel pad;
+    Font customFont;
 
     Menu(List names){
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+        try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\emumenu\\src\\main\\resources\\PressStart2P.ttf")).deriveFont(18f);
+            //customFont = Font.createFont(Font.TRUETYPE_FONT, System.class.getResourceAsStream("PressStart2P.ttf")).deriveFont(18f);
+            ge.registerFont(customFont);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         window = new ScrollPane(ScrollPane.SCROLLBARS_NEVER);
         window.setSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);
         innerFrame = new JPanel();
@@ -31,7 +45,7 @@ class Menu extends JFrame {
             int i_ = i;
             b.addActionListener(e -> {
                 try {
-                    // this.window.add(new JLabel(new ImageIcon("loading.png")));
+                    // this.window.add(new JLabel(new ImageIcon("loading.png"))); // If ROM start is slow
                     Main.startRom(i_);
                     // System.out.println("Start game: " +names.get(i_));
                 } catch (IOException e1) {
@@ -53,14 +67,20 @@ class Menu extends JFrame {
                     }
                 }
             });
-
+            b.setFont(customFont);
+            b.setForeground(Color.LIGHT_GRAY);
             b.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
                     scroll();
+                    b.setFont(b.getFont().deriveFont(26f));
+                    b.setForeground(Color.WHITE);
                 }
                 @Override
-                public void focusLost(FocusEvent e) {}
+                public void focusLost(FocusEvent e) {
+                    b.setFont(b.getFont().deriveFont(18f));
+                    b.setForeground(Color.LIGHT_GRAY);
+                }
             });
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
