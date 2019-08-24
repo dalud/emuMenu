@@ -43,7 +43,7 @@ public class Main {
         }
     }
 
-    //parse rom names into prettier format
+    // Parse rom names into prettier format
     public static List<Object> beautify(Stream<String> s){
         return s.map(n -> n.replaceAll("\\.nes", ""))
                 .map(n -> n.replaceAll("\\(U\\)", ""))
@@ -52,7 +52,7 @@ public class Main {
                 .map(n -> n.replaceAll(", The", ""))
                 .map(n -> n.replaceAll("\\(PRG 0\\)", ""))
                 .map(n -> n.replaceAll("\\(Unl\\)", ""))
-                .map(n -> n.replaceAll("\\(J\\)", ""))
+                .map(n -> n.replaceAll("\\(Japan\\)", ""))
                 .collect(Collectors.toList());
     }
 

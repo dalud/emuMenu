@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,13 +12,14 @@ class Menu extends JFrame {
     private JPanel innerFrame;
     private JPanel pad;
     Font customFont;
+    static int colorMax = 200;
+    static int colorMin = 150;
 
     Menu(List names){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\emumenu\\src\\main\\resources\\PressStart2P.ttf")).deriveFont(18f);
-            //customFont = Font.createFont(Font.TRUETYPE_FONT, System.class.getResourceAsStream("PressStart2P.ttf")).deriveFont(18f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("PressStart2P.ttf")).deriveFont(18f);
             ge.registerFont(customFont);
         } catch (FontFormatException e) {
             e.printStackTrace();
@@ -52,7 +52,6 @@ class Menu extends JFrame {
                     e1.printStackTrace();
                 }
             });
-
             b.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -68,7 +67,8 @@ class Menu extends JFrame {
                 }
             });
             b.setFont(customFont);
-            b.setForeground(Color.LIGHT_GRAY);
+            b.setForeground(Color.GRAY);
+            b.setFocusPainted(false);
             b.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -79,7 +79,7 @@ class Menu extends JFrame {
                 @Override
                 public void focusLost(FocusEvent e) {
                     b.setFont(b.getFont().deriveFont(18f));
-                    b.setForeground(Color.LIGHT_GRAY);
+                    b.setForeground(Color.GRAY);
                 }
             });
             b.setContentAreaFilled(false);
@@ -90,7 +90,6 @@ class Menu extends JFrame {
             cons.gridy = i+1;
             innerFrame.add(bPanel, cons);
             // getRootPane().setDefaultButton(b);
-
         }
         add(window);
         setLayout(null);
@@ -127,17 +126,17 @@ class Menu extends JFrame {
                 break;
         }
 
-        if(color == 255) direction = 0;
-        else if (color == 150) direction = 1;
+        if(color >= colorMax) direction = 0;
+        else if (color <= colorMin) direction = 1;
 
         switch (direction){
             case 1:
                 color += Math.random()*3;
-                if(color > 255) color = 255;
+                if(color > colorMax) color = colorMax;
                 break;
             case 0:
                 color -= Math.random()*2;
-                if(color < 150) color = 150;
+                if(color < colorMin) color = colorMin;
                 break;
         }
         switch (name){
