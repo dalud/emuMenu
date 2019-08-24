@@ -29,8 +29,7 @@ public class Main {
         int counter = 0;
         while (true){
             // Set color
-            System.out.println(counter);
-            if(counter > 10000){
+            if(counter > 100000){
                 menu.setColor(menu);
                 counter = 0;
             }

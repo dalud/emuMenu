@@ -9,15 +9,15 @@ class Menu extends JFrame {
     public static ScrollPane window;
     Color menuColor = new Color(255,255,255);
     static int rDir, gDir, bDir;    //directions to slide Colors (R,G,B)
-    private Panel innerFrame;
-    private Panel pad;
+    private JPanel innerFrame;
+    private JPanel pad;
 
     Menu(List names){
         window = new ScrollPane(ScrollPane.SCROLLBARS_NEVER);
         window.setSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height);
-        innerFrame = new Panel();
+        innerFrame = new JPanel();
         innerFrame.setLayout(new GridBagLayout());
-        pad = new Panel();
+        pad = new JPanel();
         pad.setLayout(new GridBagLayout());
         GridBagConstraints padCons = new GridBagConstraints();
         padCons.insets = new Insets(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height/2-30, 0, GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height/2-30, 0);
